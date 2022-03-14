@@ -6,6 +6,7 @@ import { PostsModule } from './posts/posts.module';
 import envConfig from '../config/env';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './user/user.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -19,17 +20,18 @@ import { UserModule } from './user/user.module';
       useFactory: async (configService: ConfigService) => ({
         type: 'mysql',
         entities: [PostsEntity, User],
-        host: configService.get('DB_HOST', 'localhost'), // 主机，默认为localhost
-        port: configService.get<number>('DB_PORT', 3306), // 端口号
-        username: configService.get('DB_USER', 'root'),
-        password: configService.get('DB_PASSWORD', 'chenxu666'),
-        database: configService.get('DB_DATABASE', 'blog'),
+        host: configService.get('DB_HOST'), // 主机，默认为localhost
+        port: configService.get<number>('DB_PORT'), // 端口号
+        username: configService.get('DB_USER'),
+        password: configService.get('DB_PASSWORD'),
+        database: configService.get('DB_DATABASE'),
         timezone: '+08:00', // 服务器上配置的时区
         synchronize: true, // 根据实体自动创建数据库表，生产环境建议关闭
       }),
     }),
     PostsModule,
     UserModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [],

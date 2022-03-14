@@ -24,4 +24,8 @@ export class UserService {
     const newUser = await this.userRepository.create(createUser);
     return await this.userRepository.save(newUser);
   }
+
+  async findOne(id: string) {
+    return await this.userRepository.findOne(id);
+  }
 }
